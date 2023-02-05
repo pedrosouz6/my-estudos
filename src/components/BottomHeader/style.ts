@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
 export const ContainerBottomHeader = styled.div `
-    width: 100%;
-    height: auto;
-
-    padding: 10px 0;
+    
     background-color: ${props => props.theme.colors.bottomHeader};
 ` 
 
 export const ContentBottomHeader = styled.div `
-
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
 `
 
 export const NavbarBottomHeader = styled.nav `
@@ -22,7 +22,12 @@ export const NavbarBottomHeader = styled.nav `
 
             a {
                 text-decoration: none;
-                font-size: 11pt;
+                font-size: 10pt;
+
+                i {
+                    color: ${props => props.theme.colors.color};
+                    font-weight: 700;
+                }
             }
         }
     }

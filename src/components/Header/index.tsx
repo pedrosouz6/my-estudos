@@ -3,7 +3,7 @@ import { Container } from "../Container";
 
 import { 
     ContainerHeader, 
-    TopHeader 
+    ContentHeader
 } from "./style";
 
 export function Header() {
@@ -11,7 +11,10 @@ export function Header() {
         <>
             <ContainerHeader>
                 <Container>
-                    Pedro
+                    <ContentHeader>
+                        <h1>My<span>Estudos</span></h1>
+                        <p>Seja bem-vindo, Pedro Souza</p>
+                    </ContentHeader>
                 </Container>
             </ContainerHeader>
             <BottomHeader />
