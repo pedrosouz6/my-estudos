@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-import { Container } from "../../Container";
-import { Header } from "../../Header";
-import { Title } from "../../Title";
+import { Container } from "../../components/Container"; 
+import { Header } from "../../components/Header"; 
+import { Title } from "../../components/Title";
 
-import { ModalAnimation } from "../../Modals/Animation/style";
-import { ModalAddMaterial } from "../../Modals/AddMaterial";
+import { ModalAnimation } from "../../components/Modals/Animation/style";
+import { ModalAddMaterial } from "../../components/Modals/AddMaterial";
 
 import { BsPlusLg } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
