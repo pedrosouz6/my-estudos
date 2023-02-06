@@ -6,7 +6,7 @@ import { Routes } from "./routes"
 
 export default function App() {
     return (
-        <ThemeProvider theme={light}>
+        <ThemeProvider theme={dark}>
             <GlobalsStyled />
             <Routes />
         </ThemeProvider>

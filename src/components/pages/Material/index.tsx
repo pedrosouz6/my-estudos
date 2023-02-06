@@ -1,9 +1,15 @@
+import { useState } from "react";
+
 import { Container } from "../../Container";
 import { Header } from "../../Header";
 import { Title } from "../../Title";
 
+import { ModalAnimation } from "../../Modals/Animation/style";
+import { ModalAddMaterial } from "../../Modals/AddMaterial";
+
 import { BsPlusLg } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
+
 import { 
     AiOutlineCheckSquare,
     AiFillDelete
@@ -20,20 +26,48 @@ import {
 } from "./style";
 
 export function Material() {
+
+    const [ toggleModalAddMaterial, setToggleModalAddMaterial ] = useState<boolean>(false);
+    const [ isRenderingModalAddMaterial, setIsRenderingModalAddMaterial ] = useState<boolean>(false);
+
+    function OpenModalAddMaterial() {
+        setToggleModalAddMaterial(true);
+        setIsRenderingModalAddMaterial(true);
+    }
+
+    function CloseModalAddMaterial() {
+        setIsRenderingModalAddMaterial(false);
+
+        setTimeout(() => {
+            setToggleModalAddMaterial(false);
+        }, 300);
+    }
+
     return (
         <>
+            <ModalAnimation isRendering={isRenderingModalAddMaterial}>
+                { 
+                    toggleModalAddMaterial && 
+                    <ModalAddMaterial closeModalAddMaterial={CloseModalAddMaterial} /> 
+                }
+            </ModalAnimation>
+
             <Header />
             <ContainerMaterial>
                 <Container>
                     <TitleAndAddMaterial>
                         <Title text="Matérias" />
 
-                        <button><i><BsPlusLg /></i> Adicionar Matéria</button>
+                        <button
+                            onClick={() => OpenModalAddMaterial()}
+                        >
+                            <i><BsPlusLg /></i> Adicionar Matéria
+                        </button>
                     </TitleAndAddMaterial>
 
                     <AllCardsMaterial>
                         <CardsMaterial>
-                            <TitleCardMaterial>Matematica</TitleCardMaterial>
+                            <TitleCardMaterial>Matemática</TitleCardMaterial>
 
                             <ContentCardMaterial>
                                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
@@ -47,7 +81,7 @@ export function Material() {
                         </CardsMaterial>
 
                          <CardsMaterial>
-                            <TitleCardMaterial>Fisica</TitleCardMaterial>
+                            <TitleCardMaterial>Física</TitleCardMaterial>
 
                             <ContentCardMaterial>
                                 Lorem ipsum, dolor sit amet consectetur 
@@ -60,7 +94,7 @@ export function Material() {
                             </ActionsCardMaterial>
                         </CardsMaterial>
                         <CardsMaterial>
-                            <TitleCardMaterial>Edicao fisica</TitleCardMaterial>
+                            <TitleCardMaterial>Educação Física</TitleCardMaterial>
 
                             <ContentCardMaterial>
                                 Lorem ipsum dolor sit amet
