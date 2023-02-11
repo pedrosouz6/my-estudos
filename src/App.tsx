@@ -1,12 +1,16 @@
 import { ThemeProvider } from "styled-components"
 import GlobalsStyled from "./style/GlobalsStyled"
-import dark from "./style/theme/dark"
-import light from "./style/theme/light"
 import { Routes } from "./routes"
 
+import { useTheme } from "./hooks/Theme"
+
+
 export default function App() {
+
+    const { theme } = useTheme();
+
     return (
-        <ThemeProvider theme={dark}>
+        <ThemeProvider theme={theme}>
             <GlobalsStyled />
             <Routes />
         </ThemeProvider>

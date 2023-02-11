@@ -1,9 +1,11 @@
 import { BottomHeader } from "../BottomHeader";
+import { ThemesMode } from "../ThemesMode";
 import { Container } from "../Container";
 
 import { 
     ContainerHeader, 
-    ContentHeader
+    ContentHeader,
+    ContentRightHeader
 } from "./style";
 
 export function Header() {
@@ -13,7 +15,11 @@ export function Header() {
                 <Container>
                     <ContentHeader>
                         <h1>My<span>Estudos</span></h1>
-                        <p>Seja bem-vindo, Pedro Souza</p>
+
+                        <ContentRightHeader>
+                            <ThemesMode />
+                            <p>Seja bem-vindo, Pedro Souza</p>
+                        </ContentRightHeader>
                     </ContentHeader>
                 </Container>
             </ContainerHeader>

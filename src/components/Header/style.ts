@@ -22,8 +22,15 @@ export const ContentHeader = styled.div `
     align-items: center;
     justify-content: space-between;
 
+ 
+`
+
+export const ContentRightHeader = styled.div `
+    display: flex;
+    align-items: center;
+    gap: 1rem; 
+
     p {
         color: white;
     }
-    
 `
