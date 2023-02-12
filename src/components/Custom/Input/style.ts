@@ -23,6 +23,7 @@ export const ContainerCustomInput = styled.div `
 
     label {
         display: block;
+        font-size: 11pt;
         margin-bottom: 5px;
     }
 

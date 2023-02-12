@@ -1,6 +1,7 @@
 import { BottomHeader } from "../BottomHeader";
 import { ThemesMode } from "../ThemesMode";
 import { Container } from "../Container";
+import { Logo } from "../Logo";
 
 import { 
     ContainerHeader, 
@@ -14,7 +15,7 @@ export function Header() {
             <ContainerHeader>
                 <Container>
                     <ContentHeader>
-                        <h1>My<span>Estudos</span></h1>
+                        <Logo />
 
                         <ContentRightHeader>
                             <ThemesMode />

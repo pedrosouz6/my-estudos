@@ -5,15 +5,6 @@ export const ContainerHeader = styled.header `
     height: 50px;
 
     background-color: ${props => props.theme.colors.primary};
-
-    h1 {
-        color: white;
-        font-style: italic;
-
-        span {
-            font-weight: 400;
-        }
-    }
 `
 
 export const ContentHeader = styled.div `
@@ -21,8 +12,6 @@ export const ContentHeader = styled.div `
     display: flex;
     align-items: center;
     justify-content: space-between;
-
- 
 `
 
 export const ContentRightHeader = styled.div `

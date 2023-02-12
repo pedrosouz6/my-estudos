@@ -1,4 +1,7 @@
 import { Formik, Form } from "formik";
+import { useEffect } from "react";
+
+import { database, ref, set, onValue, auth, createUserWithEmailAndPassword } from "../../../service/firebase";
 
 import { CustomInput } from "../../Custom/Input";
 import { AddMaterialSchema } from "../../Schema/AddMaterial";
@@ -17,8 +20,19 @@ interface ModalAddMaterialProps {
 export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProps) {
 
     function onSubmit() {
-
+        set(ref(database, '/materials/1212'), {
+            sobre: 'l'
+        });
     }
+
+    useEffect(() => {
+        const starCountRef = ref(database, 'materials/user');
+        onValue(starCountRef, (snapshot) => {
+            const data = snapshot.val();
+            console.log(data);
+        });
+
+    }, []);
 
     return (
         <Formik 
@@ -38,7 +52,7 @@ export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProp
                     </HeaderModalAddMaterial>
 
                     <ContainerForm>
-                        <Form >
+                        <Form>
                             <CustomInput 
                                 type="text" 
                                 label="Matéria"
