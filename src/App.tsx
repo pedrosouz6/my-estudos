@@ -9,6 +9,8 @@ export default function App() {
 
     const { theme } = useTheme();
 
+    console.log(process.env.REACT_APP_apiKey);
+
     return (
         <ThemeProvider theme={theme}>
             <GlobalsStyled />
