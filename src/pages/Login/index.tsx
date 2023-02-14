@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 
+import { signInWithEmailAndPassword, auth } from '../../service/firebase';
+
 import { CustomInput } from "../../components/Custom/Input";
+import { LoginSchema } from "../../components/Schema/Login";
 import { Logo } from "../../components/Logo";
 
 import { IoIosArrowForward } from 'react-icons/io';
@@ -14,10 +17,26 @@ import {
     LinksLogin
 } from "./style";
 
+interface onSubmit {
+    email: string,
+    password: string
+}
+
 export function Login() {
 
-    function onSubmit() {
+    const navigate = useNavigate();
 
+    function onSubmit({ email, password }: onSubmit) {
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            localStorage.setItem('uid_user', userCredential.user.uid);
+
+            navigate('/material');
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
     }
 
     return (
@@ -26,9 +45,10 @@ export function Login() {
                 email: '',
                 password: ''
             }}
-            onSubmit={onSubmit}
+            validationSchema={LoginSchema}
+            onSubmit={values => onSubmit(values)}
         >
-            {() => (
+            {({ isValid, dirty }) => (
                 <ContainerLogin>
                     <Logo />
                     <ContentLogin>
@@ -54,7 +74,12 @@ export function Login() {
                                     type="password"
                                 />
 
-                                <button disabled type="submit">Entrar</button>
+                                <button 
+                                    type="submit"
+                                    disabled={!isValid || !dirty}
+                                >
+                                    Entrar
+                                </button>
 
                                 <LinksLogin>
                                     <Link to="">Esqueci a senha <i><IoIosArrowForward /></i></Link>

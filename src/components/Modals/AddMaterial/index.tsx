@@ -1,7 +1,6 @@
 import { Formik, Form } from "formik";
-import { useEffect } from "react";
 
-import { database, ref, set, onValue, auth, createUserWithEmailAndPassword } from "../../../service/firebase";
+import { database, ref, update, push } from "../../../service/firebase";
 
 import { CustomInput } from "../../Custom/Input";
 import { AddMaterialSchema } from "../../Schema/AddMaterial";
@@ -17,22 +16,26 @@ interface ModalAddMaterialProps {
     closeModalAddMaterial: () => void
 }
 
+interface onSubmit {
+    subjectName: string,
+    contentName: string
+}
+
 export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProps) {
 
-    function onSubmit() {
-        set(ref(database, '/materials/1212'), {
-            sobre: 'l'
-        });
+    function onSubmit({ contentName, subjectName }: onSubmit) {
+
+        const datas: onSubmit = {
+            contentName,
+            subjectName
+        }
+        
+        const newPostKey = push(ref(database)).key;
+
+        const updates = {['k/' + newPostKey]: datas};
+
+        update(ref(database), updates);
     }
-
-    useEffect(() => {
-        const starCountRef = ref(database, 'materials/user');
-        onValue(starCountRef, (snapshot) => {
-            const data = snapshot.val();
-            console.log(data);
-        });
-
-    }, []);
 
     return (
         <Formik 
@@ -41,7 +44,7 @@ export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProp
                 contentName: ''
             }}
             validationSchema={AddMaterialSchema}
-            onSubmit={onSubmit}
+            onSubmit={values => onSubmit(values)}
         >
 
             {() => (

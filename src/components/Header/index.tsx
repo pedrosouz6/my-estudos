@@ -1,7 +1,11 @@
+import { useNavigate } from 'react-router-dom';
+
 import { BottomHeader } from "../BottomHeader";
 import { ThemesMode } from "../ThemesMode";
 import { Container } from "../Container";
 import { Logo } from "../Logo";
+
+import { auth } from '../../service/firebase';
 
 import { 
     ContainerHeader, 
@@ -10,6 +14,14 @@ import {
 } from "./style";
 
 export function Header() {
+
+    const navigate = useNavigate();
+
+    function signOut() {
+        auth.signOut();
+        navigate('/login');
+    }
+
     return (
         <>
             <ContainerHeader>
@@ -20,6 +32,8 @@ export function Header() {
                         <ContentRightHeader>
                             <ThemesMode />
                             <p>Seja bem-vindo, Pedro Souza</p>
+
+                            <button onClick={() => signOut()}>sair</button>
                         </ContentRightHeader>
                     </ContentHeader>
                 </Container>

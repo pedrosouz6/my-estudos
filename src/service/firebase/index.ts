@@ -1,6 +1,22 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { getDatabase, ref, set, onValue } from "firebase/database";
+
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from 'firebase/auth';
+
+import { 
+  getDatabase, 
+  ref, 
+  set, 
+  onValue, 
+  update, 
+  child, 
+  push, 
+  get 
+} from "firebase/database";
 
 const firebaseConfig = {
   apiKey: `${process.env.REACT_APP_apiKey}`,
@@ -21,7 +37,13 @@ export {
   database, 
   auth, 
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
   ref, 
   set, 
-  onValue 
+  onValue,
+  update,
+  child,
+  push,
+  get
 };

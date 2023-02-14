@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
-
-import { CustomInput } from "../../components/Custom/Input";
-
 import { IoIosArrowForward } from 'react-icons/io';
+
+import { auth, createUserWithEmailAndPassword } from "../../service/firebase";
+
+import { CreateAccountSchema } from "../../components/Schema/CreateAccount";
+import { CustomInput } from "../../components/Custom/Input";
+import { Logo } from "../../components/Logo";
 
 import { 
     ContainerCreateAccount, 
@@ -12,12 +15,26 @@ import {
     ContainerForm,
     LinksCreateAccount
 } from "./style";
-import { Logo } from "../../components/Logo";
+
+interface User {
+    email: string,
+    password: string
+}
 
 export function CreateAccount() {
 
-    function onSubmit() {
+    const navigate = useNavigate();
 
+    function onSubmit({ email, password }: User) {
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            localStorage.setItem('uid_user', userCredential.user.uid);
+
+            navigate('/material');
+        })
+        .catch((error) => {
+            const errorMessage = error.message;
+        })
     }
 
     return (
@@ -26,9 +43,10 @@ export function CreateAccount() {
                 email: '',
                 password: ''
             }}
-            onSubmit={onSubmit}
+            validationSchema={CreateAccountSchema}
+            onSubmit={(values) => onSubmit(values)}
         >
-            {() => (
+            {({ isValid, dirty }) => (
                 <ContainerCreateAccount>
                     <Logo />
                     <ContentCreateAccount>
@@ -54,7 +72,12 @@ export function CreateAccount() {
                                     type="password"
                                 />
 
-                                <button disabled type="submit">Criar conta</button>
+                                <button 
+                                    type="submit"
+                                    disabled={!isValid || !dirty}
+                                >
+                                    Criar conta
+                                </button>
 
                                 <LinksCreateAccount>
                                     <Link to='/'>Já tenho conta <i><IoIosArrowForward /></i></Link>
