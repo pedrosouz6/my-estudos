@@ -7,6 +7,7 @@ import { Title } from "../../components/Title";
 
 import { ModalAnimation } from "../../components/Modals/Animation/style";
 import { ModalAddMaterial } from "../../components/Modals/AddMaterial";
+import { ModalDeleteMaterial } from "../../components/Modals/DeleteMaterial";
 
 import { BsPlusLg } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
@@ -29,13 +30,18 @@ import {
 
 interface disciplineData {
     contentName: string,
-    subjectName: string
+    subjectName: string,
+    key: string
 }
 
 export function Material() {
 
+    const [ keyUser, setKeyUser ] = useState<string | null>(null);
+
     const [ toggleModalAddMaterial, setToggleModalAddMaterial ] = useState<boolean>(false);
+    const [ toggleModalDeleteMaterial, setToggleModalDeleteMaterial ] = useState<boolean>(false);
     const [ isRenderingModalAddMaterial, setIsRenderingModalAddMaterial ] = useState<boolean>(false);
+    const [ isRenderingModalDeleteMaterial, setIsRenderingModalDeleteMaterial ] = useState<boolean>(false);
 
     const [ disciplineData, setDisciplineData ] = useState<disciplineData[]>([]);
 
@@ -52,6 +58,20 @@ export function Material() {
         }, 300);
     }
 
+    function OpenModalDeleteMaterial(key: string) {
+        setKeyUser(key);
+        setToggleModalDeleteMaterial(true);
+        setIsRenderingModalDeleteMaterial(true);
+    }
+
+    function CloseModalDeleteMaterial() {
+        setIsRenderingModalDeleteMaterial(false);
+
+        setTimeout(() => {
+            setToggleModalDeleteMaterial(false);
+        }, 300);
+    }
+
     useEffect(() => {
         const uidUser = localStorage.getItem('uid_user');
 
@@ -64,9 +84,17 @@ export function Material() {
         onValue(datasUser, (snapshot) => {
             const datas = Object.entries<disciplineData>(snapshot.val() || []);
             
-            const allDatas = datas.map(([uid, item]) => { return item });
+            const allDatas = datas.map(([key, item]) => {
+                return {
+                    contentName: item.contentName,
+                    subjectName: item.subjectName,
+                    key: key
+                }
+
+            });
 
             setDisciplineData(allDatas);
+
         })
     }, []);
 
@@ -77,6 +105,16 @@ export function Material() {
                 { 
                     toggleModalAddMaterial && 
                     <ModalAddMaterial closeModalAddMaterial={CloseModalAddMaterial} /> 
+                }
+            </ModalAnimation>
+
+            <ModalAnimation isRendering={isRenderingModalDeleteMaterial}>
+                { 
+                    toggleModalDeleteMaterial && keyUser &&
+                    <ModalDeleteMaterial 
+                        closeModalDeleteMaterial={CloseModalDeleteMaterial}
+                        keyUser={keyUser}
+                    /> 
                 }
             </ModalAnimation>
 
@@ -109,7 +147,7 @@ export function Material() {
                                     <ActionsCardMaterial>
                                         <button><FiEdit /></button>
                                         <button><AiOutlineCheckSquare /></button>
-                                        <button><AiFillDelete /></button>
+                                        <button onClick={() => OpenModalDeleteMaterial(item.key)}><AiFillDelete /></button>
                                     </ActionsCardMaterial>
                                 </CardsMaterial>
                             ))

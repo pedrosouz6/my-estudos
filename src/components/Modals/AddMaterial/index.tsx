@@ -85,7 +85,7 @@ export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProp
                             />
 
                             <SubmitInputForm>
-                                <button>Fechar</button>
+                                <button onClick={() => closeModalAddMaterial()} type='button'>Fechar</button>
                                 <input type="submit" value="Adicionar" />
                             </SubmitInputForm>
                         </Form>

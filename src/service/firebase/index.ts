@@ -15,7 +15,8 @@ import {
   update, 
   child, 
   push, 
-  get 
+  get,
+  remove
 } from "firebase/database";
 
 const firebaseConfig = {
@@ -45,5 +46,6 @@ export {
   update,
   child,
   push,
-  get
+  get,
+  remove
 };
