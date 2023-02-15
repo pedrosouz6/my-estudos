@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { onValue, ref, database } from '../../service/firebase';
 
 import { Container } from "../../components/Container"; 
 import { Header } from "../../components/Header"; 
@@ -22,13 +23,21 @@ import {
     CardsMaterial,
     TitleCardMaterial,
     ContentCardMaterial,
-    ActionsCardMaterial
+    ActionsCardMaterial,
+    NoMatterMaterial
 } from "./style";
+
+interface disciplineData {
+    contentName: string,
+    subjectName: string
+}
 
 export function Material() {
 
     const [ toggleModalAddMaterial, setToggleModalAddMaterial ] = useState<boolean>(false);
     const [ isRenderingModalAddMaterial, setIsRenderingModalAddMaterial ] = useState<boolean>(false);
+
+    const [ disciplineData, setDisciplineData ] = useState<disciplineData[]>([]);
 
     function OpenModalAddMaterial() {
         setToggleModalAddMaterial(true);
@@ -42,6 +51,25 @@ export function Material() {
             setToggleModalAddMaterial(false);
         }, 300);
     }
+
+    useEffect(() => {
+        const uidUser = localStorage.getItem('uid_user');
+
+        if(!uidUser) {
+            return console.log('removou o id')
+        }
+
+        const datasUser = ref(database, 'discipline/' + uidUser);
+
+        onValue(datasUser, (snapshot) => {
+            const datas = Object.entries<disciplineData>(snapshot.val() || []);
+            
+            const allDatas = datas.map(([uid, item]) => { return item });
+
+            setDisciplineData(allDatas);
+        })
+    }, []);
+
 
     return (
         <>
@@ -66,47 +94,34 @@ export function Material() {
                     </TitleAndAddMaterial>
 
                     <AllCardsMaterial>
-                        <CardsMaterial>
-                            <TitleCardMaterial>Matemática</TitleCardMaterial>
 
-                            <ContentCardMaterial>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-                            </ContentCardMaterial>
+                        { 
+                            disciplineData &&
+                            disciplineData.length > 0 &&
+                            disciplineData.map((item, key) => (
+                                <CardsMaterial key={key}>
+                                    <TitleCardMaterial>{ item.subjectName }</TitleCardMaterial>
 
-                            <ActionsCardMaterial>
-                                <button><FiEdit /></button>
-                                <button><AiOutlineCheckSquare /></button>
-                                <button><AiFillDelete /></button>
-                            </ActionsCardMaterial>
-                        </CardsMaterial>
+                                    <ContentCardMaterial>
+                                        { item.contentName } 
+                                    </ContentCardMaterial>
 
-                         <CardsMaterial>
-                            <TitleCardMaterial>Física</TitleCardMaterial>
-
-                            <ContentCardMaterial>
-                                Lorem ipsum, dolor sit amet consectetur 
-                            </ContentCardMaterial>
-
-                            <ActionsCardMaterial>
-                                <button><FiEdit /></button>
-                                <button><AiOutlineCheckSquare /></button>
-                                <button><AiFillDelete /></button>
-                            </ActionsCardMaterial>
-                        </CardsMaterial>
-                        <CardsMaterial>
-                            <TitleCardMaterial>Educação Física</TitleCardMaterial>
-
-                            <ContentCardMaterial>
-                                Lorem ipsum dolor sit amet
-                            </ContentCardMaterial>
-
-                            <ActionsCardMaterial>
-                                <button><FiEdit /></button>
-                                <button><AiOutlineCheckSquare /></button>
-                                <button><AiFillDelete /></button>
-                            </ActionsCardMaterial>
-                        </CardsMaterial>
+                                    <ActionsCardMaterial>
+                                        <button><FiEdit /></button>
+                                        <button><AiOutlineCheckSquare /></button>
+                                        <button><AiFillDelete /></button>
+                                    </ActionsCardMaterial>
+                                </CardsMaterial>
+                            ))
+                            
+                        }
+                        
                     </AllCardsMaterial>
+
+                    {
+                        disciplineData.length < 1 && 
+                        <NoMatterMaterial>Nenhuma matéria foi adicionada até o momento!</NoMatterMaterial>
+                    } 
                 </Container>
             </ContainerMaterial>
         </>

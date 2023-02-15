@@ -1,6 +1,7 @@
 import { Formik, Form } from "formik";
+import { useNavigate } from "react-router-dom";
 
-import { database, ref, update, push } from "../../../service/firebase";
+import { database, ref, update, push, auth } from "../../../service/firebase";
 
 import { CustomInput } from "../../Custom/Input";
 import { AddMaterialSchema } from "../../Schema/AddMaterial";
@@ -22,19 +23,30 @@ interface onSubmit {
 }
 
 export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProps) {
+    
+    const navigate = useNavigate();
 
     function onSubmit({ contentName, subjectName }: onSubmit) {
 
+        const uidUser = localStorage.getItem('uid_user');
+
+        if(!uidUser) {
+            auth.signOut();
+            navigate('/login');
+        }
+
         const datas: onSubmit = {
-            contentName,
+            contentName, 
             subjectName
         }
         
         const newPostKey = push(ref(database)).key;
 
-        const updates = {['k/' + newPostKey]: datas};
+        const updates = {['discipline/' + `/${uidUser}/` + newPostKey]: datas};
 
         update(ref(database), updates);
+
+        closeModalAddMaterial()
     }
 
     return (

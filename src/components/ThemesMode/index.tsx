@@ -17,6 +17,7 @@ import {
     ButtonDropDownThemesMode,
     ArrowThemesMode
 } from "./style";
+import { ThemeType } from '../../context/Theme';
 
 export function ThemesMode() {
 
@@ -28,6 +29,11 @@ export function ThemesMode() {
         setIsRenderingDropDownThemesMode(!isRenderingDropDownThemesMode);
     }
 
+    function ToggleDropDownThemesModeAndTheme(theme: ThemeType) {
+        ToggleTheme(theme)
+        setIsRenderingDropDownThemesMode(false);
+    }
+
     return (
         <ContainerThemesMode>
 
@@ -37,8 +43,8 @@ export function ThemesMode() {
 
             { isRenderingDropDownThemesMode && 
                 <DropDownThemesMode>
-                    <li><button onClick={() => ToggleTheme(light)}><MdLightMode /> Claro</button></li>
-                    <li><button onClick={() => ToggleTheme(dark)}><MdNightlight /> Escuro</button></li>
+                    <li><button onClick={() => ToggleDropDownThemesModeAndTheme(light)}><MdLightMode /> Claro</button></li>
+                    <li><button onClick={() => ToggleDropDownThemesModeAndTheme(dark)}><MdNightlight /> Escuro</button></li>
                 </DropDownThemesMode>
             }
 

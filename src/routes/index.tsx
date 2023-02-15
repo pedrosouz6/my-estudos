@@ -8,20 +8,21 @@ import { auth, onAuthStateChanged } from '../service/firebase';
 
 export function Routes() {
 
-    const [ isLoggedUser, setIsLoggedUser ] = useState<boolean>(false);
+    const [ isLoggedUser, setIsLoggedUser ] = useState<boolean | null>(null);
 
     onAuthStateChanged(auth, (user) => {
-        if (user) {
+        if (user) {         
+            localStorage.setItem('uid_user', user.uid);
             setIsLoggedUser(true);
-
         } else {
+            localStorage.removeItem('uid_user');
             setIsLoggedUser(false);
         }
     });
 
     return (    
         <BrowserRouter>
-            { isLoggedUser ? <AppRoutes /> : <AuthRoutes /> }
+            { isLoggedUser === false ? <AuthRoutes /> : <AppRoutes /> }
         </BrowserRouter>
     )
 }

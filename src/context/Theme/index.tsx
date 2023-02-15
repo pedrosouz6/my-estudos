@@ -1,13 +1,14 @@
 import { createContext, ReactNode, useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 
 import dark from '../../style/theme/dark';
 import light from '../../style/theme/light';
 
-interface ThemeType {
+export interface ThemeType {
     title: string,
     colors: {
         primary: string,
-        
+
         background: string,
         color: string,
 
@@ -21,7 +22,6 @@ interface ThemeType {
 }
 
 interface ContextThemeProps {
-    theme: ThemeType,
     ToggleTheme: (theme: ThemeType) => void
 }
 
@@ -39,14 +39,13 @@ export function ProviderTheme({ children }: ProviderThemeProps) {
         setTheme(theme);
     }
 
-    return (
+    return (    
         <ContextTheme.Provider value={{
-            theme,
             ToggleTheme
         }}> 
-
-            { children }
-
+            <ThemeProvider theme={theme}>
+                { children }    
+            </ThemeProvider>
         </ContextTheme.Provider>
     )
 }

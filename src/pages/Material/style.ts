@@ -46,6 +46,7 @@ export const TitleAndAddMaterial = styled.div `
 `
 
 export const AllCardsMaterial = styled.div `
+    width: 100%;
     display: flex;
     gap: 1.5rem;
     flex-wrap: wrap;
@@ -53,8 +54,9 @@ export const AllCardsMaterial = styled.div `
     margin-top: 2rem;
 `
 
-export const CardsMaterial = styled.div `   
-    width: 230px;
+export const CardsMaterial = styled.div `
+    flex: 1 1 210px;
+    max-width: 230px;
     height: 120px;
     border: 1px solid ${props => props.theme.colors.primary};
     box-shadow: 0 0 2px ${props => props.theme.colors.primary};
@@ -89,4 +91,11 @@ export const ActionsCardMaterial = styled.div `
         cursor: pointer;
         padding: 1px;
     }
+`
+
+export const NoMatterMaterial = styled.span `
+    text-align: center;
+    display: block;
+    font-size: 15pt;
+    margin-top: 1rem;
 `

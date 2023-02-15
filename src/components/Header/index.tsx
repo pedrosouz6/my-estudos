@@ -28,10 +28,10 @@ export function Header() {
                 <Container>
                     <ContentHeader>
                         <Logo />
-
                         <ContentRightHeader>
                             <ThemesMode />
-                            <p>Seja bem-vindo, Pedro Souza</p>
+                            
+                            <p>Seja bem-vindo, { auth.currentUser?.email }</p>
 
                             <button onClick={() => signOut()}>sair</button>
                         </ContentRightHeader>
