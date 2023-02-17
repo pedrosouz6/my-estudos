@@ -6,6 +6,8 @@ export default {
         background: '#444',
         color: '#fff',
 
+        borderColor: '#777',
+
         header: '#666',
         bottomHeader: '#555',
 

@@ -58,12 +58,19 @@ export const CardsMaterial = styled.div `
     flex: 1 1 210px;
     max-width: 230px;
     height: 120px;
+    background-color: ${props => props.theme.colors.bottomHeader};
     border: 1px solid ${props => props.theme.colors.primary};
     box-shadow: 0 0 2px ${props => props.theme.colors.primary};
     border-radius: 3px;
 
     padding: 10px;
     position: relative;
+
+    transition: .2s ease-in-out;
+
+    &:hover {
+        border-left: 3px solid ${props => props.theme.colors.primary};
+    }
 `
 
 export const TitleCardMaterial = styled.h5 `
@@ -81,13 +88,13 @@ export const ActionsCardMaterial = styled.div `
     bottom: 10px;
 
     display: flex;
-    gap: 1rem;
+    gap: .7rem;
 
     button {
         background: none;
         border: none;
 
-        font-size: 11pt;
+        font-size: 12pt;
         cursor: pointer;
         padding: 1px;
     }
@@ -98,4 +105,16 @@ export const NoMatterMaterial = styled.span `
     display: block;
     font-size: 15pt;
     margin-top: 1rem;
+`
+
+export const ButtonDeleteActionCardMaterial = styled.button `
+    color: ${props => props.theme.colors.warning};
+`
+
+export const ButtonEditActionCardMaterial = styled.button `
+    color: ${props => props.theme.colors.primary};
+`
+
+export const ButtonCheckActionCardMaterial = styled.button `
+    color: ${props => props.theme.colors.color};
 `

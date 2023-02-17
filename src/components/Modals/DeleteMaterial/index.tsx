@@ -19,7 +19,9 @@ export function ModalDeleteMaterial({ closeModalDeleteMaterial, keyUser }: Modal
     function DeleteMaterial() {
         const user = localStorage.getItem('uid_user');
 
-        remove(ref(database, `discipline/${user}/${keyUser}`)) ;
+        remove(ref(database, `discipline/${user}/${keyUser}`));
+
+        closeModalDeleteMaterial();
     }
 
     return (
@@ -34,10 +36,16 @@ export function ModalDeleteMaterial({ closeModalDeleteMaterial, keyUser }: Modal
             </ContentModalDeleteMaterial>
 
             <ActionsModalDeleteMaterial>
-                <ButtonCloseModalDeleteMaterial onClick={() => closeModalDeleteMaterial()}>
+                <ButtonCloseModalDeleteMaterial 
+                    onClick={() => closeModalDeleteMaterial()}
+                >
                     Fechar
                 </ButtonCloseModalDeleteMaterial>
-                <ButtonDeleteModalDeleteMaterial onClick={() => DeleteMaterial()}>Deletar</ButtonDeleteModalDeleteMaterial>
+                <ButtonDeleteModalDeleteMaterial 
+                    onClick={() => DeleteMaterial()}
+                >
+                    Deletar
+                </ButtonDeleteModalDeleteMaterial>
             </ActionsModalDeleteMaterial>
         </ContainerModalDeleteMaterial>
     )

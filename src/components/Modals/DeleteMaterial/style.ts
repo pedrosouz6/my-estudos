@@ -69,14 +69,25 @@ export const ActionsModalDeleteMaterial = styled.div `
         border-radius: 3px;
         border: 2px solid ${props => props.theme.colors.primary};
         cursor: pointer;
+        transition: .3s ease-in-out;
     }
+
+  
 `
 
 export const ButtonCloseModalDeleteMaterial = styled.button `
     color: ${props => props.theme.colors.primary};
+    
+    &:hover {
+        opacity: .8;
+    }
 `
 
 export const ButtonDeleteModalDeleteMaterial = styled.button `
     background-color: ${props => props.theme.colors.primary};
     color: white;
+
+    &:hover {
+        opacity: .8;
+    }
 `

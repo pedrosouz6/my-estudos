@@ -12,6 +12,8 @@ export interface ThemeType {
         background: string,
         color: string,
 
+        borderColor: string,
+
         header: string,
         bottomHeader: string,
 

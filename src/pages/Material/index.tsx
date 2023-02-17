@@ -25,7 +25,10 @@ import {
     TitleCardMaterial,
     ContentCardMaterial,
     ActionsCardMaterial,
-    NoMatterMaterial
+    NoMatterMaterial,
+    ButtonEditActionCardMaterial,
+    ButtonCheckActionCardMaterial,
+    ButtonDeleteActionCardMaterial
 } from "./style";
 
 interface disciplineData {
@@ -94,7 +97,6 @@ export function Material() {
             });
 
             setDisciplineData(allDatas);
-
         })
     }, []);
 
@@ -119,6 +121,7 @@ export function Material() {
             </ModalAnimation>
 
             <Header />
+            
             <ContainerMaterial>
                 <Container>
                     <TitleAndAddMaterial>
@@ -132,7 +135,6 @@ export function Material() {
                     </TitleAndAddMaterial>
 
                     <AllCardsMaterial>
-
                         { 
                             disciplineData &&
                             disciplineData.length > 0 &&
@@ -145,15 +147,24 @@ export function Material() {
                                     </ContentCardMaterial>
 
                                     <ActionsCardMaterial>
-                                        <button><FiEdit /></button>
-                                        <button><AiOutlineCheckSquare /></button>
-                                        <button onClick={() => OpenModalDeleteMaterial(item.key)}><AiFillDelete /></button>
+                                        <ButtonEditActionCardMaterial>
+                                            <FiEdit />
+                                        </ButtonEditActionCardMaterial>
+
+                                        <ButtonCheckActionCardMaterial>
+                                            <AiOutlineCheckSquare />
+                                        </ButtonCheckActionCardMaterial>
+
+                                        <ButtonDeleteActionCardMaterial 
+                                            onClick={() => OpenModalDeleteMaterial(item.key)}
+                                        >
+                                            <AiFillDelete />
+                                        </ButtonDeleteActionCardMaterial>
                                     </ActionsCardMaterial>
+
                                 </CardsMaterial>
                             ))
-                            
                         }
-                        
                     </AllCardsMaterial>
 
                     {

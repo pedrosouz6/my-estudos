@@ -1,59 +1,29 @@
-import { useState } from 'react';
-
 import light from '../../style/theme/light';
 import dark from '../../style/theme/dark';
 import { useTheme } from '../../hooks/Theme'; 
-
-import { 
-    MdLightMode,
-    MdNightlight
-} from 'react-icons/md';
-
-import { IoMdArrowDropup } from 'react-icons/io';
+import { ThemeType } from '../../context/Theme';
 
 import { 
     ContainerThemesMode,
-    DropDownThemesMode,
-    ButtonDropDownThemesMode,
-    ArrowThemesMode
 } from "./style";
-import { ThemeType } from '../../context/Theme';
+
 
 export function ThemesMode() {
 
     const { ToggleTheme } = useTheme();
 
-    const [ isRenderingDropDownThemesMode, setIsRenderingDropDownThemesMode ] = useState<boolean>(false);
-
-    function ToggleDropDownThemesMode() {
-        setIsRenderingDropDownThemesMode(!isRenderingDropDownThemesMode);
-    }
-
-    function ToggleDropDownThemesModeAndTheme(theme: ThemeType) {
+    function ToggleDropDownThemesModeAndTheme(nameTheme: string) {
+        const theme: ThemeType = nameTheme === 'light' ? light : dark;
         ToggleTheme(theme)
-        setIsRenderingDropDownThemesMode(false);
     }
 
     return (
         <ContainerThemesMode>
-
-            <ButtonDropDownThemesMode>
-                <button onClick={() => ToggleDropDownThemesMode()}><MdLightMode /></button>
-            </ButtonDropDownThemesMode>
-
-            { isRenderingDropDownThemesMode && 
-                <DropDownThemesMode>
-                    <li><button onClick={() => ToggleDropDownThemesModeAndTheme(light)}><MdLightMode /> Claro</button></li>
-                    <li><button onClick={() => ToggleDropDownThemesModeAndTheme(dark)}><MdNightlight /> Escuro</button></li>
-                </DropDownThemesMode>
-            }
-
-            { isRenderingDropDownThemesMode &&
-                <ArrowThemesMode>
-                    <IoMdArrowDropup />
-                </ArrowThemesMode>
-            }
-
+            <label htmlFor="theme">Temas</label>
+            <select id='theme' onChange={e => ToggleDropDownThemesModeAndTheme(e.target.value)}>
+                <option value='light'>Claro</option>    
+                <option value='dark'>Escuro</option>    
+            </select>
         </ContainerThemesMode>
     )
 }
