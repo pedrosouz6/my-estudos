@@ -1,3 +1,4 @@
+import { useMessageModal } from '../../../hooks/MessageModal';
 import { remove, ref, database } from '../../../service/firebase';
 
 import { 
@@ -16,10 +17,22 @@ interface ModalDeleteMaterialProps {
 
 export function ModalDeleteMaterial({ closeModalDeleteMaterial, keyUser }: ModalDeleteMaterialProps) {
 
+    const { ToggleErrorMessage, ToggleMessageModal, ToggleRenderErrorMessage } = useMessageModal(); 
+
     function DeleteMaterial() {
         const user = localStorage.getItem('uid_user');
 
-        remove(ref(database, `discipline/${user}/${keyUser}`));
+        remove(ref(database, `discipline/${user}/${keyUser}`))
+        .then((datas) => {
+            ToggleErrorMessage(false);
+            ToggleRenderErrorMessage(true);
+            ToggleMessageModal('Matéria deletada com sucesso');
+        })
+        .catch((error) => {
+            ToggleErrorMessage(true);
+            ToggleRenderErrorMessage(true);
+            ToggleMessageModal('Erro ao tentar deletar matéria');
+        });
 
         closeModalDeleteMaterial();
     }

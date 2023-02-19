@@ -98,6 +98,7 @@ export function Material() {
 
             setDisciplineData(allDatas);
         })
+       
     }, []);
 
 

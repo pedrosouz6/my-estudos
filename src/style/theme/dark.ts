@@ -11,7 +11,7 @@ export default {
         header: '#666',
         bottomHeader: '#555',
 
-        success: '#4E41F0',
+        success: '#03BB85',
         info: '#F7931B',
         warning: '#E44C4E'
     }
