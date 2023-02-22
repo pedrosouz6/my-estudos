@@ -61,7 +61,7 @@ export const CountdownModalMessage = styled.div `
     height: 3px;
     background-color: white;
 
-    transition: 3.8s linear;
+    transition: 2.8s linear;
 
     position: absolute;
     bottom: 0px;

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { onValue, ref, database } from '../../service/firebase';
+import { useNavigate } from 'react-router-dom';
+import { onValue, ref, database, auth } from '../../service/firebase';
 
 import { Container } from "../../components/Container"; 
 import { Header } from "../../components/Header"; 
@@ -8,6 +9,8 @@ import { Title } from "../../components/Title";
 import { ModalAnimation } from "../../components/Modals/Animation/style";
 import { ModalAddMaterial } from "../../components/Modals/AddMaterial";
 import { ModalDeleteMaterial } from "../../components/Modals/DeleteMaterial";
+
+import { useLoading } from "../../hooks/Loading";
 
 import { BsPlusLg } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
@@ -39,6 +42,9 @@ interface disciplineData {
 
 export function Material() {
 
+    const { ToggleLoading } = useLoading();
+    const navigate = useNavigate();
+
     const [ keyUser, setKeyUser ] = useState<string | null>(null);
 
     const [ toggleModalAddMaterial, setToggleModalAddMaterial ] = useState<boolean>(false);
@@ -46,7 +52,7 @@ export function Material() {
     const [ isRenderingModalAddMaterial, setIsRenderingModalAddMaterial ] = useState<boolean>(false);
     const [ isRenderingModalDeleteMaterial, setIsRenderingModalDeleteMaterial ] = useState<boolean>(false);
 
-    const [ disciplineData, setDisciplineData ] = useState<disciplineData[]>([]);
+    const [ disciplineData, setDisciplineData ] = useState<disciplineData[] | null>(null);
 
     function OpenModalAddMaterial() {
         setToggleModalAddMaterial(true);
@@ -76,10 +82,13 @@ export function Material() {
     }
 
     useEffect(() => {
+        ToggleLoading(true);
+        
         const uidUser = localStorage.getItem('uid_user');
 
         if(!uidUser) {
-            return console.log('removou o id')
+            auth.signOut();
+            navigate('/login');
         }
 
         const datasUser = ref(database, 'discipline/' + uidUser);
@@ -96,8 +105,10 @@ export function Material() {
 
             });
 
+            ToggleLoading(false);
             setDisciplineData(allDatas);
         })
+
        
     }, []);
 
@@ -168,7 +179,7 @@ export function Material() {
                         }
                     </AllCardsMaterial>
 
-                    {
+                    {   disciplineData &&
                         disciplineData.length < 1 && 
                         <NoMatterMaterial>Nenhuma matéria foi adicionada até o momento!</NoMatterMaterial>
                     } 

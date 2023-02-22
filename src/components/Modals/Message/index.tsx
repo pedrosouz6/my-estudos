@@ -8,7 +8,7 @@ export function ModalMessage() {
     if(isRenderErrorMessage) {
         setTimeout(() => {
             ToggleRenderErrorMessage(false)
-        }, 4000)
+        }, 3000)
     }
 
     function CancelRenderingErrorMessage() {

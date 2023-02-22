@@ -15,6 +15,7 @@ import {
     ContainerForm,
     LinksCreateAccount
 } from "./style";
+import { useMessageModal } from "../../hooks/MessageModal";
 
 interface User {
     email: string,
@@ -22,6 +23,8 @@ interface User {
 }
 
 export function CreateAccount() {
+
+    const { ToggleErrorMessage, ToggleMessageModal, ToggleRenderErrorMessage } = useMessageModal();
 
     const navigate = useNavigate();
 
@@ -33,7 +36,13 @@ export function CreateAccount() {
             navigate('/material');
         })
         .catch((error) => {
-            const errorMessage = error.message;
+            const errorMessage: string = error.message;
+
+            if(errorMessage.includes('email-already')) {
+                ToggleRenderErrorMessage(true);
+                ToggleErrorMessage(true);
+                ToggleMessageModal('O e-mail já está cadastrado!');
+            }
         })
     }
 
@@ -80,7 +89,7 @@ export function CreateAccount() {
                                 </button>
 
                                 <LinksCreateAccount>
-                                    <Link to='/'>Já tenho conta <i><IoIosArrowForward /></i></Link>
+                                    <Link to='/login'>Já tenho conta <i><IoIosArrowForward /></i></Link>
                                 </LinksCreateAccount>
                             </Form>
                         </ContainerForm>

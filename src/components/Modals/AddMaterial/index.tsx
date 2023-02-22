@@ -1,8 +1,9 @@
 import { Formik, Form } from "formik";
 import { useNavigate } from "react-router-dom";
+import { useLoading } from "../../../hooks/Loading";
 import { useMessageModal } from "../../../hooks/MessageModal";
 
-import { database, ref, update, push, auth } from "../../../service/firebase";
+import { database, ref, update, push, auth, off } from "../../../service/firebase";
 
 import { CustomInput } from "../../Custom/Input";
 import { AddMaterialSchema } from "../../Schema/AddMaterial";
@@ -59,7 +60,7 @@ export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProp
             ToggleMessageModal('Ocorreu um erro ao tentar adicionar uma matéria');
         })
 
-        closeModalAddMaterial()
+        closeModalAddMaterial();
     }
 
     return (

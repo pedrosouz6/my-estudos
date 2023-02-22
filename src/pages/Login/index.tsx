@@ -3,6 +3,8 @@ import { Formik, Form } from "formik";
 
 import { signInWithEmailAndPassword, auth } from '../../service/firebase';
 
+import { useState } from "react";
+
 import { CustomInput } from "../../components/Custom/Input";
 import { LoginSchema } from "../../components/Schema/Login";
 import { Logo } from "../../components/Logo";
@@ -16,6 +18,7 @@ import {
     ContainerForm,
     LinksLogin
 } from "./style";
+import { useMessageModal } from "../../hooks/MessageModal";
 
 interface onSubmit {
     email: string,
@@ -25,8 +28,11 @@ interface onSubmit {
 export function Login() {
 
     const navigate = useNavigate();
+    const { ToggleErrorMessage, ToggleMessageModal, ToggleRenderErrorMessage } = useMessageModal();
+
 
     function onSubmit({ email, password }: onSubmit) {
+
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             localStorage.setItem('uid_user', userCredential.user.uid);
@@ -35,7 +41,19 @@ export function Login() {
         })
         .catch((error) => {
             const errorCode = error.code;
-            const errorMessage = error.message;
+            const errorMessage: string = error.message;
+
+            if(errorMessage.includes('password')) {
+                ToggleErrorMessage(true);
+                ToggleMessageModal('A senha está incorreta!');
+                ToggleRenderErrorMessage(true);
+
+                return
+            }
+
+            ToggleErrorMessage(true);
+            ToggleMessageModal('O e-mail não está cadastrado!');
+            ToggleRenderErrorMessage(true);
         });
     }
 

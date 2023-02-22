@@ -16,7 +16,8 @@ import {
   child, 
   push, 
   get,
-  remove
+  remove,
+  off
 } from "firebase/database";
 
 const firebaseConfig = {
@@ -47,5 +48,6 @@ export {
   child,
   push,
   get,
-  remove
+  remove,
+  off
 };
