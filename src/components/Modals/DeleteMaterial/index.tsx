@@ -1,5 +1,5 @@
 import { useMessageModal } from '../../../hooks/MessageModal';
-import { remove, ref, database } from '../../../service/firebase';
+import { remove, ref, database, auth } from '../../../service/firebase';
 
 import { 
     ContainerModalDeleteMaterial,
@@ -21,6 +21,10 @@ export function ModalDeleteMaterial({ closeModalDeleteMaterial, keyUser }: Modal
 
     function DeleteMaterial() {
         const user = localStorage.getItem('uid_user');
+
+        if(!user) {
+            return auth.signOut();
+        }
 
         remove(ref(database, `discipline/${user}/${keyUser}`))
         .then((datas) => {

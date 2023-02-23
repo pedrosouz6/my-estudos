@@ -3,8 +3,6 @@ import { Formik, Form } from "formik";
 
 import { signInWithEmailAndPassword, auth } from '../../service/firebase';
 
-import { useState } from "react";
-
 import { CustomInput } from "../../components/Custom/Input";
 import { LoginSchema } from "../../components/Schema/Login";
 import { Logo } from "../../components/Logo";
@@ -40,7 +38,6 @@ export function Login() {
             navigate('/material');
         })
         .catch((error) => {
-            const errorCode = error.code;
             const errorMessage: string = error.message;
 
             if(errorMessage.includes('password')) {
@@ -48,7 +45,7 @@ export function Login() {
                 ToggleMessageModal('A senha está incorreta!');
                 ToggleRenderErrorMessage(true);
 
-                return
+                return;
             }
 
             ToggleErrorMessage(true);
@@ -100,7 +97,7 @@ export function Login() {
                                 </button>
 
                                 <LinksLogin>
-                                    <Link to="">Esqueci a senha <i><IoIosArrowForward /></i></Link>
+                                    <Link to='/redefine-password'>Esqueci a senha <i><IoIosArrowForward /></i></Link>
                                     <Link to='/create-account'>Criar conta <i><IoIosArrowForward /></i></Link>
                                 </LinksLogin>
                             </Form>

@@ -4,7 +4,8 @@ import {
   getAuth, 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword,
-  onAuthStateChanged
+  onAuthStateChanged,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 
 import { 
@@ -31,13 +32,21 @@ const firebaseConfig = {
   measurementId: `${process.env.REACT_APP_measurementId}`
 };
 
+const actionCodeSettings  ={ 
+  url: 'http://localhost:3000/login'
+} 
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+auth.languageCode = 'pt';
+
 const database = getDatabase(app);
 
 export { 
   database, 
   auth, 
+  actionCodeSettings,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
@@ -49,5 +58,6 @@ export {
   push,
   get,
   remove,
-  off
+  off,
+  sendPasswordResetEmail
 };

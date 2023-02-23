@@ -35,8 +35,7 @@ export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProp
         const uidUser = localStorage.getItem('uid_user');
 
         if(!uidUser) {
-            auth.signOut();
-            navigate('/login');
+            return auth.signOut();
         }
 
         const datas: onSubmit = {

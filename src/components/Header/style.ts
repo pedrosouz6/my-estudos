@@ -22,6 +22,10 @@ export const ContentRightHeader = styled.div `
 
     p {
         color: white;
+
+        @media (max-width: 650px) {
+            display: none;
+        }
     }
 `
 

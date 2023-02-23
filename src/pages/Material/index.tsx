@@ -88,7 +88,6 @@ export function Material() {
 
         if(!uidUser) {
             auth.signOut();
-            navigate('/login');
         }
 
         const datasUser = ref(database, 'discipline/' + uidUser);

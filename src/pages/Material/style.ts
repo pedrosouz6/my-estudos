@@ -51,7 +51,13 @@ export const AllCardsMaterial = styled.div `
     gap: 1.5rem;
     flex-wrap: wrap;
 
+    padding-bottom: 1.5rem;
+
     margin-top: 2rem;
+
+    @media (max-width: 730px) {
+        justify-content: center;
+    }
 `
 
 export const CardsMaterial = styled.div `
