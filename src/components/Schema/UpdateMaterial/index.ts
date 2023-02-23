@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const AddMaterialSchema = Yup.object({
+export const UpdateMaterialSchema = Yup.object({
     subjectName: Yup.string()
     .trim()
     .min(1, "O nome da matéria deve ser maior que 1 caractere.")

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
 import { onValue, ref, database, auth } from '../../service/firebase';
 
 import { Container } from "../../components/Container"; 
@@ -9,6 +8,7 @@ import { Title } from "../../components/Title";
 import { ModalAnimation } from "../../components/Modals/Animation/style";
 import { ModalAddMaterial } from "../../components/Modals/AddMaterial";
 import { ModalDeleteMaterial } from "../../components/Modals/DeleteMaterial";
+import { ModalUpdateMaterial } from "../../components/Modals/UpdateMaterial";
 
 import { useLoading } from "../../hooks/Loading";
 
@@ -43,14 +43,17 @@ interface disciplineData {
 export function Material() {
 
     const { ToggleLoading } = useLoading();
-    const navigate = useNavigate();
 
     const [ keyUser, setKeyUser ] = useState<string | null>(null);
 
     const [ toggleModalAddMaterial, setToggleModalAddMaterial ] = useState<boolean>(false);
     const [ toggleModalDeleteMaterial, setToggleModalDeleteMaterial ] = useState<boolean>(false);
+    const [ toggleModalUpdateMaterial, setToggleModalUpdateMaterial ] = useState<boolean>(false);
+
     const [ isRenderingModalAddMaterial, setIsRenderingModalAddMaterial ] = useState<boolean>(false);
     const [ isRenderingModalDeleteMaterial, setIsRenderingModalDeleteMaterial ] = useState<boolean>(false);
+    const [ isRenderingModalUpdateMaterial, setIsRenderingModalUpdateMaterial ] = useState<boolean>(false);
+
 
     const [ disciplineData, setDisciplineData ] = useState<disciplineData[] | null>(null);
 
@@ -81,6 +84,20 @@ export function Material() {
         }, 300);
     }
 
+    function OpenModalUpdateMaterial(key: string) {
+        setKeyUser(key);
+        setToggleModalUpdateMaterial(true);
+        setIsRenderingModalUpdateMaterial(true);
+    }
+
+    function CloseModalUpdateMaterial() {
+        setIsRenderingModalUpdateMaterial(false);
+
+        setTimeout(() => {
+            setToggleModalUpdateMaterial(false);
+        }, 300);
+    }
+
     useEffect(() => {
         ToggleLoading(true);
         
@@ -101,14 +118,11 @@ export function Material() {
                     subjectName: item.subjectName,
                     key: key
                 }
-
             });
 
             ToggleLoading(false);
             setDisciplineData(allDatas);
         })
-
-       
     }, []);
 
 
@@ -126,6 +140,16 @@ export function Material() {
                     toggleModalDeleteMaterial && keyUser &&
                     <ModalDeleteMaterial 
                         closeModalDeleteMaterial={CloseModalDeleteMaterial}
+                        keyUser={keyUser}
+                    /> 
+                }
+            </ModalAnimation>
+
+            <ModalAnimation isRendering={isRenderingModalUpdateMaterial}>
+                { 
+                    toggleModalUpdateMaterial && keyUser &&
+                    <ModalUpdateMaterial
+                        closeModalUpdateMaterial={CloseModalUpdateMaterial}
                         keyUser={keyUser}
                     /> 
                 }
@@ -158,7 +182,9 @@ export function Material() {
                                     </ContentCardMaterial>
 
                                     <ActionsCardMaterial>
-                                        <ButtonEditActionCardMaterial>
+                                        <ButtonEditActionCardMaterial 
+                                            onClick={() => OpenModalUpdateMaterial(item.key)}
+                                        >
                                             <FiEdit />
                                         </ButtonEditActionCardMaterial>
 

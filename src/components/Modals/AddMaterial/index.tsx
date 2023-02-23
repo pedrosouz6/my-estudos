@@ -1,9 +1,7 @@
 import { Formik, Form } from "formik";
-import { useNavigate } from "react-router-dom";
-import { useLoading } from "../../../hooks/Loading";
 import { useMessageModal } from "../../../hooks/MessageModal";
 
-import { database, ref, update, push, auth, off } from "../../../service/firebase";
+import { database, ref, update, push, auth } from "../../../service/firebase";
 
 import { CustomInput } from "../../Custom/Input";
 import { AddMaterialSchema } from "../../Schema/AddMaterial";
@@ -27,8 +25,6 @@ interface onSubmit {
 export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProps) {
 
     const { ToggleErrorMessage, ToggleMessageModal, ToggleRenderErrorMessage } = useMessageModal();
-    
-    const navigate = useNavigate();
 
     function onSubmit({ contentName, subjectName }: onSubmit) {
 
@@ -48,12 +44,12 @@ export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProp
         const updates = {['discipline/' + `/${uidUser}/` + newPostKey]: datas};
 
         update(ref(database), updates)
-        .then((datas) => {
+        .then(() => {
             ToggleRenderErrorMessage(true);
             ToggleErrorMessage(false);
             ToggleMessageModal('Uma nova matéria foi adicionada com sucesso');
         })
-        .catch((error) => {
+        .catch(() => {
             ToggleRenderErrorMessage(true);
             ToggleErrorMessage(true);
             ToggleMessageModal('Ocorreu um erro ao tentar adicionar uma matéria');
