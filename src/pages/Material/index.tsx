@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { onValue, ref, database, auth } from '../../service/firebase';
+import { onValue, ref, database, auth, update } from '../../service/firebase';
 
 import { Container } from "../../components/Container"; 
 import { Header } from "../../components/Header"; 
@@ -33,6 +33,7 @@ import {
     ButtonCheckActionCardMaterial,
     ButtonDeleteActionCardMaterial
 } from "./style";
+import { useMessageModal } from "../../hooks/MessageModal";
 
 interface disciplineData {
     contentName: string,
@@ -40,9 +41,11 @@ interface disciplineData {
     key: string
 }
 
+
 export function Material() {
 
     const { ToggleLoading } = useLoading();
+    const { ToggleErrorMessage, ToggleRenderErrorMessage, ToggleMessageModal } = useMessageModal();
 
     const [ keyUser, setKeyUser ] = useState<string | null>(null);
 
@@ -55,7 +58,7 @@ export function Material() {
     const [ isRenderingModalUpdateMaterial, setIsRenderingModalUpdateMaterial ] = useState<boolean>(false);
 
 
-    const [ disciplineData, setDisciplineData ] = useState<disciplineData[] | null>(null);
+    const [ disciplineData, setDisciplineData ] = useState<disciplineData[]>([]);
 
     function OpenModalAddMaterial() {
         setToggleModalAddMaterial(true);
@@ -98,6 +101,28 @@ export function Material() {
         }, 300);
     }
 
+    function ButtonCheckMaterial(key: string) {
+        const uidUser = localStorage.getItem('uid_user');
+
+        if(!uidUser) {
+            return auth.signOut();
+        }
+
+        const updates = {['discipline/' + `/${uidUser}/${key}/studiedContent`]: true};
+
+        update(ref(database), updates)
+        .then(() => {
+            ToggleRenderErrorMessage(true);
+            ToggleErrorMessage(false);
+            ToggleMessageModal('Matéria estudada!');
+        })
+        .catch(() => {
+            ToggleRenderErrorMessage(true);
+            ToggleErrorMessage(true);
+            ToggleMessageModal('Ocorreu um erro ao tentar atualizada a matéria!');
+        })
+    }
+
     useEffect(() => {
         ToggleLoading(true);
         
@@ -107,7 +132,7 @@ export function Material() {
             auth.signOut();
         }
 
-        const datasUser = ref(database, 'discipline/' + uidUser);
+        const datasUser = ref(database, `discipline/${uidUser}`);
 
         onValue(datasUser, (snapshot) => {
             const datas = Object.entries<disciplineData>(snapshot.val() || []);
@@ -188,7 +213,9 @@ export function Material() {
                                             <FiEdit />
                                         </ButtonEditActionCardMaterial>
 
-                                        <ButtonCheckActionCardMaterial>
+                                        <ButtonCheckActionCardMaterial 
+                                            onClick={() => ButtonCheckMaterial(item.key)}
+                                        >
                                             <AiOutlineCheckSquare />
                                         </ButtonCheckActionCardMaterial>
 

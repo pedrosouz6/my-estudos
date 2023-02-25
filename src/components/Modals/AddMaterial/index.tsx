@@ -22,6 +22,12 @@ interface onSubmit {
     contentName: string
 }
 
+interface datasRequest {
+    subjectName: string,
+    contentName: string,
+    studiedContent: boolean
+}
+
 export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProps) {
 
     const { ToggleErrorMessage, ToggleMessageModal, ToggleRenderErrorMessage } = useMessageModal();
@@ -34,11 +40,11 @@ export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProp
             return auth.signOut();
         }
 
-        const datas: onSubmit = {
+        const datas: datasRequest = {
             contentName, 
-            subjectName
+            subjectName,
+            studiedContent: false
         }
-        
         const newPostKey = push(ref(database)).key;
 
         const updates = {['discipline/' + `/${uidUser}/` + newPostKey]: datas};

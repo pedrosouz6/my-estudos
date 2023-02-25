@@ -15,7 +15,7 @@ export const ContentBottomHeader = styled.div `
 export const NavbarBottomHeader = styled.nav `
     ul {
         display: flex;
-        gap: 1.5rem;
+        gap: 1.8rem;
 
         li {
             list-style: none;
