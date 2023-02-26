@@ -90,6 +90,7 @@ export const ContentCardStudied = styled.span `
 `
 
 export const ActionsCardStudied = styled.div `
+    width: 100%;
     position: absolute;
     bottom: 10px;
 
@@ -123,4 +124,17 @@ export const ButtonEditActionCardStudied = styled.button `
 
 export const ButtonCheckActionCardStudied = styled.button `
     color: ${props => props.theme.colors.success};
+`
+
+export const ButtonNoteActionCardMaterial = styled.button `
+    position: absolute;
+    right: 20px;
+    padding: 2px;
+    color: ${props => props.theme.colors.primary};
+    display: block;
+
+    span {
+        font-size: 8pt;
+        margin-left: 4px;
+    }
 `

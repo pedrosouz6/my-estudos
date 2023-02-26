@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const ContainerCustomInput = styled.div `
     margin-bottom: 20px;
+    position: relative;
 
     input {
         width: 100%;
@@ -17,7 +18,7 @@ export const ContainerCustomInput = styled.div `
 
     span {
         font-size: 9pt;
-        color: #f40000;
+        color: ${props => props.theme.colors.warning};
         font-weight: 600;
     }
 

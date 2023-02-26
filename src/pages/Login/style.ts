@@ -60,6 +60,19 @@ export const ContainerForm = styled.div `
     }
 `
 
+export const ShowPassword = styled.div `
+    margin-bottom: 20px;
+    
+    label {
+        cursor: pointer;
+        font-size: 11pt;
+    }
+
+    input {
+        cursor: pointer;
+    }
+` 
+
 export const LinksLogin = styled.div `
     margin-top: 2rem;
 

@@ -25,7 +25,8 @@ interface onSubmit {
 interface datasRequest {
     subjectName: string,
     contentName: string,
-    studiedContent: boolean
+    studiedContent: boolean,
+    note: string
 }
 
 export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProps) {
@@ -43,7 +44,8 @@ export function ModalAddMaterial({ closeModalAddMaterial }: ModalAddMaterialProp
         const datas: datasRequest = {
             contentName, 
             subjectName,
-            studiedContent: false
+            studiedContent: false,
+            note: ''
         }
         const newPostKey = push(ref(database)).key;
 

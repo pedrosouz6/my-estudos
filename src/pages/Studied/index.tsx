@@ -13,6 +13,8 @@ import { ModalUpdateMaterial } from "../../components/Modals/UpdateMaterial";
 import { useLoading } from "../../hooks/Loading";
 
 import { FiEdit } from 'react-icons/fi';
+import { MdOutlineCollectionsBookmark } from 'react-icons/md';
+import { IoMdCheckbox } from 'react-icons/io';
 
 import { 
     AiOutlineCheckSquare,
@@ -30,17 +32,19 @@ import {
     NoMatterStudied,
     ButtonEditActionCardStudied,
     ButtonCheckActionCardStudied,
-    ButtonDeleteActionCardStudied
+    ButtonDeleteActionCardStudied,
+    ButtonNoteActionCardMaterial
 } from "./style";
 import { useMessageModal } from "../../hooks/MessageModal";
+import { ModalAddNotes } from "../../components/Modals/AddNotes";
 
 interface disciplineData {
     contentName: string,
     subjectName: string,
     studiedContent: boolean,
-    key: string
+    key: string,
+    note: string
 }
-
 
 export function Studied() {
 
@@ -52,10 +56,12 @@ export function Studied() {
     const [ toggleModalAddMaterial, setToggleModalAddMaterial ] = useState<boolean>(false);
     const [ toggleModalDeleteMaterial, setToggleModalDeleteMaterial ] = useState<boolean>(false);
     const [ toggleModalUpdateMaterial, setToggleModalUpdateMaterial ] = useState<boolean>(false);
+    const [ toggleModalAddNotes, setToggleModalAddNotes ] = useState<boolean>(false);
 
     const [ isRenderingModalAddMaterial, setIsRenderingModalAddMaterial ] = useState<boolean>(false);
     const [ isRenderingModalDeleteMaterial, setIsRenderingModalDeleteMaterial ] = useState<boolean>(false);
     const [ isRenderingModalUpdateMaterial, setIsRenderingModalUpdateMaterial ] = useState<boolean>(false);
+    const [ isRenderingModalAddNotes, setIsRenderingModalAddNotes ] = useState<boolean>(false);
 
 
     const [ disciplineData, setDisciplineData ] = useState<disciplineData[]>([]);
@@ -101,6 +107,20 @@ export function Studied() {
         }, 300);
     }
 
+    function OpenModalAddNotes(key: string) {
+        setKeyUser(key);
+        setToggleModalAddNotes(true);
+        setIsRenderingModalAddNotes(true);
+    }
+
+    function CloseModalAddNotes() {
+        setIsRenderingModalAddNotes(false);
+
+        setTimeout(() => {
+            setToggleModalAddNotes(false);
+        }, 300);
+    }
+
     function ButtonCancelCheckMaterial(key: string) {
         const uidUser = localStorage.getItem('uid_user');
 
@@ -142,7 +162,8 @@ export function Studied() {
                     contentName: item.contentName,
                     subjectName: item.subjectName,
                     studiedContent: item.studiedContent,
-                    key: key
+                    key: key,
+                    note: item.note
                 }
             });
 
@@ -181,6 +202,16 @@ export function Studied() {
                 }
             </ModalAnimation>
 
+            <ModalAnimation isRendering={isRenderingModalAddNotes}>
+                { 
+                    toggleModalAddNotes && keyUser &&
+                    <ModalAddNotes
+                        closeModalAddNotes={CloseModalAddNotes}
+                        keyUser={keyUser}
+                    /> 
+                }
+            </ModalAnimation>
+
             <Header />
             
             <ContainerStudied>
@@ -212,7 +243,7 @@ export function Studied() {
                                         <ButtonCheckActionCardStudied
                                             onClick={() => ButtonCancelCheckMaterial(item.key)}
                                         >
-                                            <AiOutlineCheckSquare />
+                                            <IoMdCheckbox />
                                         </ButtonCheckActionCardStudied>
 
                                         <ButtonDeleteActionCardStudied 
@@ -220,6 +251,13 @@ export function Studied() {
                                         >
                                             <AiFillDelete />
                                         </ButtonDeleteActionCardStudied>
+
+                                        <ButtonNoteActionCardMaterial 
+                                            onClick={() => OpenModalAddNotes(item.key)}
+                                        >
+                                            <MdOutlineCollectionsBookmark /> 
+                                            <span>{ item.note === '' ? '0 anotações' : '1 anotação' }</span>
+                                        </ButtonNoteActionCardMaterial>
                                     </ActionsCardStudied>
 
                                 </CardsStudied>

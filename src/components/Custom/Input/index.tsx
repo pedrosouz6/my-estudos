@@ -18,6 +18,7 @@ export function CustomInput({ label, ...props }: CustomInputProps) {
         <ContainerCustomInput>
             <label htmlFor={props.id}> { label } </label>
             <input { ...field } { ...props } />
+            
             { meta.touched && meta.error && <span> {meta.error }</span> }
         </ContainerCustomInput>
     )

@@ -9,11 +9,14 @@ import { ModalAnimation } from "../../components/Modals/Animation/style";
 import { ModalAddMaterial } from "../../components/Modals/AddMaterial";
 import { ModalDeleteMaterial } from "../../components/Modals/DeleteMaterial";
 import { ModalUpdateMaterial } from "../../components/Modals/UpdateMaterial";
+import { ModalAddNotes } from "../../components/Modals/AddNotes";
 
 import { useLoading } from "../../hooks/Loading";
 
 import { BsPlusLg } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
+import { MdOutlineCollectionsBookmark } from 'react-icons/md';
+import { IoMdCheckboxOutline } from 'react-icons/io'
 
 import { 
     AiOutlineCheckSquare,
@@ -31,7 +34,8 @@ import {
     NoMatterMaterial,
     ButtonEditActionCardMaterial,
     ButtonCheckActionCardMaterial,
-    ButtonDeleteActionCardMaterial
+    ButtonDeleteActionCardMaterial,
+    ButtonNoteActionCardMaterial
 } from "./style";
 import { useMessageModal } from "../../hooks/MessageModal";
 
@@ -39,7 +43,8 @@ interface disciplineData {
     contentName: string,
     subjectName: string,
     studiedContent: boolean,
-    key: string
+    key: string,
+    note: string
 }
 
 
@@ -53,10 +58,12 @@ export function Material() {
     const [ toggleModalAddMaterial, setToggleModalAddMaterial ] = useState<boolean>(false);
     const [ toggleModalDeleteMaterial, setToggleModalDeleteMaterial ] = useState<boolean>(false);
     const [ toggleModalUpdateMaterial, setToggleModalUpdateMaterial ] = useState<boolean>(false);
+    const [ toggleModalAddNotes, setToggleModalAddNotes ] = useState<boolean>(false);
 
     const [ isRenderingModalAddMaterial, setIsRenderingModalAddMaterial ] = useState<boolean>(false);
     const [ isRenderingModalDeleteMaterial, setIsRenderingModalDeleteMaterial ] = useState<boolean>(false);
     const [ isRenderingModalUpdateMaterial, setIsRenderingModalUpdateMaterial ] = useState<boolean>(false);
+    const [ isRenderingModalAddNotes, setIsRenderingModalAddNotes ] = useState<boolean>(false);
 
 
     const [ disciplineData, setDisciplineData ] = useState<disciplineData[]>([]);
@@ -102,6 +109,20 @@ export function Material() {
         }, 300);
     }
 
+    function OpenModalAddNotes(key: string) {
+        setKeyUser(key);
+        setToggleModalAddNotes(true);
+        setIsRenderingModalAddNotes(true);
+    }
+
+    function CloseModalAddNotes() {
+        setIsRenderingModalAddNotes(false);
+
+        setTimeout(() => {
+            setToggleModalAddNotes(false);
+        }, 300);
+    }
+
     function ButtonCheckMaterial(key: string) {
         const uidUser = localStorage.getItem('uid_user');
 
@@ -143,7 +164,8 @@ export function Material() {
                     contentName: item.contentName,
                     subjectName: item.subjectName,
                     studiedContent: item.studiedContent,
-                    key: key
+                    key: key,
+                    note: item.note
                 }
             });
 
@@ -177,6 +199,16 @@ export function Material() {
                     toggleModalUpdateMaterial && keyUser &&
                     <ModalUpdateMaterial
                         closeModalUpdateMaterial={CloseModalUpdateMaterial}
+                        keyUser={keyUser}
+                    /> 
+                }
+            </ModalAnimation>
+
+            <ModalAnimation isRendering={isRenderingModalAddNotes}>
+                { 
+                    toggleModalAddNotes && keyUser &&
+                    <ModalAddNotes
+                        closeModalAddNotes={CloseModalAddNotes}
                         keyUser={keyUser}
                     /> 
                 }
@@ -219,7 +251,7 @@ export function Material() {
                                         <ButtonCheckActionCardMaterial 
                                             onClick={() => ButtonCheckMaterial(item.key)}
                                         >
-                                            <AiOutlineCheckSquare />
+                                            <IoMdCheckboxOutline />
                                         </ButtonCheckActionCardMaterial>
 
                                         <ButtonDeleteActionCardMaterial 
@@ -227,6 +259,13 @@ export function Material() {
                                         >
                                             <AiFillDelete />
                                         </ButtonDeleteActionCardMaterial>
+
+                                        <ButtonNoteActionCardMaterial 
+                                            onClick={() => OpenModalAddNotes(item.key)}
+                                        >
+                                            <MdOutlineCollectionsBookmark /> 
+                                            <span>{ item.note === '' ? '0 anotações' : '1 anotação' }</span>
+                                        </ButtonNoteActionCardMaterial>
                                     </ActionsCardMaterial>
 
                                 </CardsMaterial>

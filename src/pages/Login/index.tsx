@@ -14,9 +14,11 @@ import {
     ContentLogin,
     HeaderLogin,
     ContainerForm,
-    LinksLogin
+    LinksLogin,
+    ShowPassword
 } from "./style";
 import { useMessageModal } from "../../hooks/MessageModal";
+import { useState } from "react";
 
 interface onSubmit {
     email: string,
@@ -28,6 +30,7 @@ export function Login() {
     const navigate = useNavigate();
     const { ToggleErrorMessage, ToggleMessageModal, ToggleRenderErrorMessage } = useMessageModal();
 
+    const [ isShowPassword, setIsShowPassword ] = useState<boolean>(false);
 
     function onSubmit({ email, password }: onSubmit) {
 
@@ -86,8 +89,14 @@ export function Login() {
                                     id="password"
                                     name="password"
                                     placeholder="Digite sua senha"
-                                    type="password"
+                                    type={isShowPassword ? 'text' : 'password'}
                                 />
+
+
+                                <ShowPassword>
+                                    <input type="checkbox" id='checkbox' onClick={() => setIsShowPassword(!isShowPassword)} />
+                                    <label htmlFor="checkbox"> Mostrar senha</label>
+                                </ShowPassword>
 
                                 <button 
                                     type="submit"

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const ContainerMaterial = styled.div `
+export const ContainerNotes = styled.div `
 
 `
 
-export const TitleAndAddMaterial = styled.div `
+export const TitleAndAddNotes = styled.div `
     width: 100%;
     margin-top: 1rem;
 
@@ -45,7 +45,7 @@ export const TitleAndAddMaterial = styled.div `
     }
 `
 
-export const AllCardsMaterial = styled.div `
+export const AllCardsNotes = styled.div `
     width: 100%;
     display: flex;
     gap: 1.5rem;
@@ -60,10 +60,10 @@ export const AllCardsMaterial = styled.div `
     }
 `
 
-export const CardsMaterial = styled.div `
+export const CardsNotes = styled.div `
     flex: 1 1 210px;
     max-width: 230px;
-    height: 120px;
+    height: 300px;
     background-color: ${props => props.theme.colors.bottomHeader};
     border: 1px solid ${props => props.theme.colors.primary};
     box-shadow: 0 0 2px ${props => props.theme.colors.primary};
@@ -79,18 +79,21 @@ export const CardsMaterial = styled.div `
     }
 `
 
-export const TitleCardMaterial = styled.h5 `
+export const TitleCardNotes = styled.h5 `
     font-size: 10pt;
+
+    span {
+        font-weight: 400;
+    }
 `
 
-export const ContentCardMaterial = styled.span `
+export const ContentCardNotes = styled.span `
     display: block;
     font-size: 10pt;
-    margin: 8px 0;
+    margin: 10px 0;
 `
 
-export const ActionsCardMaterial = styled.div `
-    width: 100%;
+export const ActionsCardNotes = styled.div `
     position: absolute;
     bottom: 10px;
 
@@ -107,34 +110,28 @@ export const ActionsCardMaterial = styled.div `
     }
 `
 
-export const NoMatterMaterial = styled.span `
+export const NoMatterNotes = styled.span `
     text-align: center;
     display: block;
     font-size: 15pt;
     margin-top: 1rem;
 `
 
-export const ButtonDeleteActionCardMaterial = styled.button `
+export const ButtonDeleteActionCardNotes = styled.button `
     color: ${props => props.theme.colors.warning};
 `
 
-export const ButtonEditActionCardMaterial = styled.button `
+interface ButtonEditActionCardNotesProps {
+    studiedContent: boolean
+}
+
+export const ButtonEditActionCardNotes = styled.button `
     color: ${props => props.theme.colors.primary};
 `
 
-export const ButtonCheckActionCardMaterial = styled.button `
-    color: ${props => props.theme.colors.color};
-`
-
-export const ButtonNoteActionCardMaterial = styled.button `
-    position: absolute;
-    right: 20px;
-    padding: 2px;
-    color: ${props => props.theme.colors.primary};
-    display: block;
-
-    span {
-        font-size: 8pt;
-        margin-left: 4px;
-    }
+export const ButtonCheckActionCardNotes = styled.button `
+    color: ${(props: ButtonEditActionCardNotesProps) => 
+    props.studiedContent ? 
+    (props) => props.theme.colors.success :
+    (props) => props.theme.colors.color};
 `
