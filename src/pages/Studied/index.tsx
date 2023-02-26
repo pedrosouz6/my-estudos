@@ -12,7 +12,6 @@ import { ModalUpdateMaterial } from "../../components/Modals/UpdateMaterial";
 
 import { useLoading } from "../../hooks/Loading";
 
-import { BsPlusLg } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
 
 import { 
@@ -21,17 +20,17 @@ import {
 } from 'react-icons/ai';
 
 import { 
-    ContainerMaterial, 
-    TitleAndAddMaterial,
-    AllCardsMaterial,
-    CardsMaterial,
-    TitleCardMaterial,
-    ContentCardMaterial,
-    ActionsCardMaterial,
-    NoMatterMaterial,
-    ButtonEditActionCardMaterial,
-    ButtonCheckActionCardMaterial,
-    ButtonDeleteActionCardMaterial
+    ContainerStudied, 
+    TitleAndAddStudied,
+    AllCardsStudied,
+    CardsStudied,
+    TitleCardStudied,
+    ContentCardStudied,
+    ActionsCardStudied,
+    NoMatterStudied,
+    ButtonEditActionCardStudied,
+    ButtonCheckActionCardStudied,
+    ButtonDeleteActionCardStudied
 } from "./style";
 import { useMessageModal } from "../../hooks/MessageModal";
 
@@ -43,7 +42,7 @@ interface disciplineData {
 }
 
 
-export function Material() {
+export function Studied() {
 
     const { ToggleLoading } = useLoading();
     const { ToggleErrorMessage, ToggleRenderErrorMessage, ToggleMessageModal } = useMessageModal();
@@ -102,20 +101,20 @@ export function Material() {
         }, 300);
     }
 
-    function ButtonCheckMaterial(key: string) {
+    function ButtonCancelCheckMaterial(key: string) {
         const uidUser = localStorage.getItem('uid_user');
 
         if(!uidUser) {
             return auth.signOut();
         }
 
-        const updates = {['discipline/' + `/${uidUser}/${key}/studiedContent`]: true};
+        const updates = {['discipline/' + `/${uidUser}/${key}/studiedContent`]: false};
 
         update(ref(database), updates)
         .then(() => {
             ToggleRenderErrorMessage(true);
             ToggleErrorMessage(false);
-            ToggleMessageModal('Matéria estudada!');
+            ToggleMessageModal('Matéria estudada foi removida!');
         })
         .catch(() => {
             ToggleRenderErrorMessage(true);
@@ -184,62 +183,56 @@ export function Material() {
 
             <Header />
             
-            <ContainerMaterial>
+            <ContainerStudied>
                 <Container>
-                    <TitleAndAddMaterial>
-                        <Title text="Matérias" />
+                    <TitleAndAddStudied>
+                        <Title text="Matérias Já Estudadas" />
+                    </TitleAndAddStudied>
 
-                        <button
-                            onClick={() => OpenModalAddMaterial()}
-                        >
-                            <i><BsPlusLg /></i> Adicionar Matéria
-                        </button>
-                    </TitleAndAddMaterial>
-
-                    <AllCardsMaterial>
+                    <AllCardsStudied>
                         { 
                             disciplineData &&
                             disciplineData.length > 0 &&
                             disciplineData.map((item, key) => (
-                                !item.studiedContent &&
-                                <CardsMaterial key={key}>
-                                    <TitleCardMaterial>{ item.subjectName }</TitleCardMaterial>
+                                item.studiedContent && 
+                                <CardsStudied key={key}>
+                                    <TitleCardStudied>{ item.subjectName }</TitleCardStudied>
 
-                                    <ContentCardMaterial>
+                                    <ContentCardStudied>
                                         { item.contentName } 
-                                    </ContentCardMaterial>
+                                    </ContentCardStudied>
 
-                                    <ActionsCardMaterial>
-                                        <ButtonEditActionCardMaterial 
+                                    <ActionsCardStudied>
+                                        <ButtonEditActionCardStudied 
                                             onClick={() => OpenModalUpdateMaterial(item.key)}
                                         >
                                             <FiEdit />
-                                        </ButtonEditActionCardMaterial>
+                                        </ButtonEditActionCardStudied>
 
-                                        <ButtonCheckActionCardMaterial 
-                                            onClick={() => ButtonCheckMaterial(item.key)}
+                                        <ButtonCheckActionCardStudied
+                                            onClick={() => ButtonCancelCheckMaterial(item.key)}
                                         >
                                             <AiOutlineCheckSquare />
-                                        </ButtonCheckActionCardMaterial>
+                                        </ButtonCheckActionCardStudied>
 
-                                        <ButtonDeleteActionCardMaterial 
+                                        <ButtonDeleteActionCardStudied 
                                             onClick={() => OpenModalDeleteMaterial(item.key)}
                                         >
                                             <AiFillDelete />
-                                        </ButtonDeleteActionCardMaterial>
-                                    </ActionsCardMaterial>
+                                        </ButtonDeleteActionCardStudied>
+                                    </ActionsCardStudied>
 
-                                </CardsMaterial>
+                                </CardsStudied>
                             ))
                         }
-                    </AllCardsMaterial>
+                    </AllCardsStudied>
 
                     {   disciplineData &&
                         disciplineData.length < 1 && 
-                        <NoMatterMaterial>Nenhuma matéria foi adicionada até o momento!</NoMatterMaterial>
-                    } 
+                        <NoMatterStudied>Você não classificou nenhuma matéria como estudada!</NoMatterStudied>
+                    }
                 </Container>
-            </ContainerMaterial>
+            </ContainerStudied>
         </>
     )
 }
