@@ -55,8 +55,6 @@ export function Header() {
                                         <span>{ auth.currentUser?.email }</span>
                                     </li>
 
-                                    <li><button>Meu perfil</button></li>
-                            
                                     <li><ThemesMode /> </li>
 
                                     <li><button onClick={() => SignOut()}>Sair da conta</button></li>

@@ -1,6 +1,5 @@
 import { Formik, Form } from "formik";
 import { useEffect, useState } from 'react';
-import { useLoading } from "../../../hooks/Loading";
 import { useMessageModal } from "../../../hooks/MessageModal";
 
 import { database, ref, update, auth , onValue } from "../../../service/firebase";
@@ -26,8 +25,6 @@ interface onSubmit {
 }
 
 export function ModalUpdateMaterial({ closeModalUpdateMaterial, keyUser }: ModalUpdateMaterialProps) {
-
-    const { isLoading, ToggleLoading } = useLoading();
 
     const [ loadValues, setLoadValues ] = useState(false);
 
@@ -81,7 +78,7 @@ export function ModalUpdateMaterial({ closeModalUpdateMaterial, keyUser }: Modal
             const datas = Object.entries<string>(snapshot.val() || []);
 
             setContent(datas[0][1]);
-            setSubject(datas[1][1]);
+            setSubject(datas[3][1]);
 
             setLoadValues(true);
         })

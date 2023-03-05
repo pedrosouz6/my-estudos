@@ -19,7 +19,6 @@ import { MdOutlineCollectionsBookmark } from 'react-icons/md';
 import { IoMdCheckboxOutline } from 'react-icons/io'
 
 import { 
-    AiOutlineCheckSquare,
     AiFillDelete
 } from 'react-icons/ai';
 
@@ -224,7 +223,7 @@ export function Material() {
                         <button
                             onClick={() => OpenModalAddMaterial()}
                         >
-                            <i><BsPlusLg /></i> Adicionar Matéria
+                            <i><BsPlusLg /></i> Adicionar
                         </button>
                     </TitleAndAddMaterial>
 

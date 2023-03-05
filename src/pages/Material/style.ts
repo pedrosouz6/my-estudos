@@ -9,6 +9,8 @@ export const TitleAndAddMaterial = styled.div `
     margin-top: 1rem;
 
     display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
     justify-content: space-between;
 
     button {
@@ -18,7 +20,7 @@ export const TitleAndAddMaterial = styled.div `
         border: none;
         border-radius: 2px;
         letter-spacing: .3px;
-        padding: 5px 20px;
+        padding: 8px 16px;
         font-size: 9pt;
 
         text-transform: uppercase;
@@ -55,13 +57,13 @@ export const AllCardsMaterial = styled.div `
 
     margin-top: 2rem;
 
-    @media (max-width: 730px) {
+    @media (max-width: 470px) {
         justify-content: center;
     }
 `
 
 export const CardsMaterial = styled.div `
-    flex: 1 1 210px;
+    flex: 1 1 190px;
     max-width: 230px;
     height: 120px;
     background-color: ${props => props.theme.colors.bottomHeader};
@@ -76,6 +78,10 @@ export const CardsMaterial = styled.div `
 
     &:hover {
         border-left: 3px solid ${props => props.theme.colors.primary};
+    }
+
+    @media (max-width: 470px) {
+        max-width: 300px;
     }
 `
 

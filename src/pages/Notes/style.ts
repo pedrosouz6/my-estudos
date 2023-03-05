@@ -61,9 +61,9 @@ export const AllCardsNotes = styled.div `
 `
 
 export const CardsNotes = styled.div `
-    flex: 1 1 210px;
-    max-width: 230px;
-    height: 300px;
+    flex: 1 1 200px;
+    max-width: 250px;
+    height: 270px;
     background-color: ${props => props.theme.colors.bottomHeader};
     border: 1px solid ${props => props.theme.colors.primary};
     box-shadow: 0 0 2px ${props => props.theme.colors.primary};

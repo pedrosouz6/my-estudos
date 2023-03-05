@@ -7,12 +7,9 @@ import { Title } from "../../components/Title";
 
 import { ModalAnimation } from "../../components/Modals/Animation/style";
 import { ModalAddMaterial } from "../../components/Modals/AddMaterial";
-import { ModalDeleteMaterial } from "../../components/Modals/DeleteMaterial";
-import { ModalUpdateMaterial } from "../../components/Modals/UpdateMaterial";
 
 import { useLoading } from "../../hooks/Loading";
 
-import { FiEdit } from 'react-icons/fi';
 import { IoMdCheckbox, IoMdCheckboxOutline } from 'react-icons/io';
 
 import { AiFillDelete } from 'react-icons/ai';
@@ -26,11 +23,11 @@ import {
     ContentCardNotes,
     ActionsCardNotes,
     NoMatterNotes,
-    ButtonEditActionCardNotes,
     ButtonCheckActionCardNotes,
     ButtonDeleteActionCardNotes
 } from "./style";
 import { useMessageModal } from "../../hooks/MessageModal";
+import { ModalDeleteNotes } from "../../components/Modals/DeleteNotes";
 
 interface disciplineData {
     contentName: string,
@@ -49,20 +46,12 @@ export function Notes() {
     const [ keyUser, setKeyUser ] = useState<string | null>(null);
 
     const [ toggleModalAddMaterial, setToggleModalAddMaterial ] = useState<boolean>(false);
-    const [ toggleModalDeleteMaterial, setToggleModalDeleteMaterial ] = useState<boolean>(false);
-    const [ toggleModalUpdateMaterial, setToggleModalUpdateMaterial ] = useState<boolean>(false);
+    const [ toggleModalDeleteNotes, setToggleModalDeleteNotes ] = useState<boolean>(false);
 
     const [ isRenderingModalAddMaterial, setIsRenderingModalAddMaterial ] = useState<boolean>(false);
-    const [ isRenderingModalDeleteMaterial, setIsRenderingModalDeleteMaterial ] = useState<boolean>(false);
-    const [ isRenderingModalUpdateMaterial, setIsRenderingModalUpdateMaterial ] = useState<boolean>(false);
-
+    const [ isRenderingModalDeleteNotes, setIsRenderingModalDeleteNotes ] = useState<boolean>(false);
 
     const [ disciplineData, setDisciplineData ] = useState<disciplineData[]>([]);
-
-    function OpenModalAddMaterial() {
-        setToggleModalAddMaterial(true);
-        setIsRenderingModalAddMaterial(true);
-    }
 
     function CloseModalAddMaterial() {
         setIsRenderingModalAddMaterial(false);
@@ -72,31 +61,17 @@ export function Notes() {
         }, 300);
     }
 
-    function OpenModalDeleteMaterial(key: string) {
+    function OpenModalDeleteNotes(key: string) {
         setKeyUser(key);
-        setToggleModalDeleteMaterial(true);
-        setIsRenderingModalDeleteMaterial(true);
+        setToggleModalDeleteNotes(true);
+        setIsRenderingModalDeleteNotes(true);
     }
 
-    function CloseModalDeleteMaterial() {
-        setIsRenderingModalDeleteMaterial(false);
+    function CloseModalDeleteNotes() {
+        setIsRenderingModalDeleteNotes(false);
 
         setTimeout(() => {
-            setToggleModalDeleteMaterial(false);
-        }, 300);
-    }
-
-    function OpenModalUpdateMaterial(key: string) {
-        setKeyUser(key);
-        setToggleModalUpdateMaterial(true);
-        setIsRenderingModalUpdateMaterial(true);
-    }
-
-    function CloseModalUpdateMaterial() {
-        setIsRenderingModalUpdateMaterial(false);
-
-        setTimeout(() => {
-            setToggleModalUpdateMaterial(false);
+            setToggleModalDeleteNotes(false);
         }, 300);
     }
 
@@ -151,7 +126,6 @@ export function Notes() {
         })
     }, []);
 
-
     return (
         <>
             <ModalAnimation isRendering={isRenderingModalAddMaterial}>
@@ -161,21 +135,11 @@ export function Notes() {
                 }
             </ModalAnimation>
 
-            <ModalAnimation isRendering={isRenderingModalDeleteMaterial}>
+            <ModalAnimation isRendering={isRenderingModalDeleteNotes}>
                 { 
-                    toggleModalDeleteMaterial && keyUser &&
-                    <ModalDeleteMaterial 
-                        closeModalDeleteMaterial={CloseModalDeleteMaterial}
-                        keyUser={keyUser}
-                    /> 
-                }
-            </ModalAnimation>
-
-            <ModalAnimation isRendering={isRenderingModalUpdateMaterial}>
-                { 
-                    toggleModalUpdateMaterial && keyUser &&
-                    <ModalUpdateMaterial
-                        closeModalUpdateMaterial={CloseModalUpdateMaterial}
+                    toggleModalDeleteNotes && keyUser &&
+                    <ModalDeleteNotes 
+                        closeModalDeleteNotes={CloseModalDeleteNotes}
                         keyUser={keyUser}
                     /> 
                 }
@@ -219,7 +183,7 @@ export function Notes() {
                                         </ButtonCheckActionCardNotes>
 
                                         <ButtonDeleteActionCardNotes 
-                                            onClick={() => OpenModalDeleteMaterial(item.key)}
+                                            onClick={() => OpenModalDeleteNotes(item.key)}
                                         >
                                             <AiFillDelete />
                                         </ButtonDeleteActionCardNotes>
@@ -232,8 +196,11 @@ export function Notes() {
 
                     {   disciplineData &&
                         disciplineData.length < 1 && 
+                        
                         <NoMatterNotes>Você ainda não fez nenhuma anotação!</NoMatterNotes>
                     }
+
+                  
                 </Container>
             </ContainerNotes>
         </>

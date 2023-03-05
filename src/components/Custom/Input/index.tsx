@@ -17,7 +17,7 @@ export function CustomInput({ label, ...props }: CustomInputProps) {
     return (
         <ContainerCustomInput>
             <label htmlFor={props.id}> { label } </label>
-            <input { ...field } { ...props } />
+            <input { ...field } { ...props } autoComplete='off' />
             
             { meta.touched && meta.error && <span> {meta.error }</span> }
         </ContainerCustomInput>
